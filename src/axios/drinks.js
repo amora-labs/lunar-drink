@@ -4,7 +4,7 @@ import { requester as http } from './http'
 
 const makeDrink = drink => {
     return new Promise((resolve, reject) => {
-        http.get(`/main/make/drink/${drink}`, {})
+        http.get(`main/make/drink/${drink}`, {})
         .then(response => response.data)
         .then(data => resolve(data))
     })
