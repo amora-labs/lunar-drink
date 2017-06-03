@@ -46,6 +46,7 @@
                 text-align: center
                 line-height: 25px
                 +flex(row, n, center, center)
+                +cursor-pointer
 
                 &:hover
                     transform: scale(1.8)
@@ -150,7 +151,7 @@
                 | cuba
                 br
                 | libre
-            .drink.top.color2
+            .drink.top.color2(@click="myDrink('maitai')")
                 | mai
                 br
                 | tai
@@ -158,14 +159,14 @@
                 | cuba
                 br
                 | libre
-            .drink.left.color4
+            .drink.left.color4(@click="myDrink('hifi')")
                 | hi
                 br
                 | fI
 
             .big
 
-            .drink.right.color1
+            .drink.right.color1(@click="myDrink('cubalibre')")
                 | cuba
                 br
                 | libre
@@ -173,7 +174,7 @@
                 | mai
                 br
                 | tai
-            .drink.bottom.color3.mini
+            .drink.bottom.color3.mini(@click="myDrink('moskvasvobodno')")
                 | moskva
                 br
                 | svobodno
@@ -185,6 +186,7 @@
 
 <script>
     import { mapState, mapGetters, mapMutations } from 'vuex'
+    import { makeDrink } from '../axios/drinks'
 
     export default {
         props: [],
@@ -199,7 +201,16 @@
             ...mapState({})
         },
         methods: {
-            ...mapMutations([])
+            ...mapMutations([]),
+            myDrink (drink) {
+                if (drink) {
+                    console.log('making drink', drink)
+                    makeDrink(drink)
+                    .then(data => console.log(data))
+                } else {
+
+                }
+            }
         },
         filters: {},
         watch: {}
