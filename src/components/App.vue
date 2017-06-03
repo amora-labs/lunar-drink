@@ -1,9 +1,6 @@
 <style lang="sass">
     @import ../sass/app
 
-    // @media only screen and (max-width: 640px)
-
-    // @media only screen and (min-width: 1025px)
     #home
         +flex(row, n, center, center)
         position: absolute
@@ -11,20 +8,6 @@
         width: 100%
         color: darken($color3, 20%)
         +dont-select
-
-        > .amora
-            position: absolute
-            bottom: $pixel-proportion * 4
-            right: $pixel-proportion * 4
-            height: $pixel-proportion * 8
-            width: $pixel-proportion * 16
-
-        > .name
-            position: absolute
-            z-index: 9
-            text-align: center
-            font-size: 60px
-            line-height: 50px
 
         > .drinks
             +flex(row, w, center, center)
@@ -118,18 +101,6 @@
                 &::after
                     +animation(colors, 1024ms, ease-in-out, 0, infinite, normal, running)
 
-            > .top
-                top: $pixel-proportion * -3
-
-            > .bottom
-                bottom: $pixel-proportion * -3
-
-            > .left
-                left: $pixel-proportion * -4
-
-            > .right
-                right: $pixel-proportion * -4
-
             > .margin
                 margin: $pixel-proportion * 10
 
@@ -176,6 +147,69 @@
 
                 > .fa
                     color: darken($color5, 60%)
+
+    @media only screen and (max-width: 640px)
+        .amora
+            position: absolute
+            bottom: $pixel-proportion * 4
+            margin-left: auto
+            margin-right: auto
+            height: $pixel-proportion * 8
+            width: $pixel-proportion * 16
+
+        .name
+            margin-top: $pixel-proportion * -10
+            position: absolute
+            z-index: 9
+            text-align: center
+            font-size: 60px
+            line-height: 50px
+            transform: scale(.8)
+
+        .drinks
+            margin-top: $pixel-proportion * -10
+            transform: scale(.8)
+
+            > .top
+                top: $pixel-proportion * -3
+
+            > .bottom
+                bottom: $pixel-proportion * -3
+
+            > .left
+                left: $pixel-proportion * -4
+                top: $pixel-proportion * -3
+
+            > .right
+                right: $pixel-proportion * -4
+
+    @media only screen and (min-width: 1025px)
+        .amora
+            position: absolute
+            bottom: $pixel-proportion * 4
+            right: $pixel-proportion * 4
+            height: $pixel-proportion * 8
+            width: $pixel-proportion * 16
+
+        .name
+            position: absolute
+            z-index: 9
+            text-align: center
+            font-size: 60px
+            line-height: 50px
+
+        .top
+            top: $pixel-proportion * -3
+
+        .bottom
+            bottom: $pixel-proportion * -3
+
+        .left
+            left: $pixel-proportion * -4
+
+        .right
+            right: $pixel-proportion * -4
+
 
     @keyframes spin
         from
