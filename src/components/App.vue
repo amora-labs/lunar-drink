@@ -287,7 +287,7 @@
 
 <script>
     import { mapState, mapGetters, mapMutations } from 'vuex'
-    // import { makeDrink } from '../axios/drinks'
+    import { makeDrink } from '../axios/drinks'
 
     export default {
         props: [],
@@ -308,16 +308,16 @@
         methods: {
             ...mapMutations([]),
             myDrink (drink) {
-                this.active = drink
-                this.calcTime(5)
-                // if (drink && this.active === '') {
-                //     console.log('making drink', drink)
-                //     this.active = drink
-                //     makeDrink(drink)
-                //     .then(data => {
-                //         this.calcTime(data.time)
-                //     })
-                // } else {
+                // this.active = drink
+                // this.calcTime(5)
+                if (drink && this.active === '') {
+                    console.log('making drink', drink)
+                    this.active = drink
+                    makeDrink(drink)
+                    .then(data => {
+                        this.calcTime(data.time)
+                    })
+                }
                 //
                 // }
             },
