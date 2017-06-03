@@ -1,6 +1,9 @@
 <style lang="sass">
     @import ../sass/app
 
+    // @media only screen and (max-width: 640px)
+
+    // @media only screen and (min-width: 1025px)
     #home
         +flex(row, n, center, center)
         position: absolute
@@ -49,24 +52,43 @@
                 +cursor-pointer
 
                 &:hover
-                    transform: scale(1.8)
+                    transform: scale(1.3)
                     border-style: solid
-                    border-width: 1px
+
+                > .internal
+                    margin-top: $pixel-proportion / 2
+                    z-index: 9
+
+                    > .time
+                        font-size: 20px
+                        margin-top: $pixel-proportion * -.3
+
+                > .fa
+                    position: absolute
+                    z-index: 4
+                    font-size: 185px
+                    color: $white
+                    top: $pixel-proportion * -3.5
+                    left: $pixel-proportion * -6.9
+                    +transition(.2s)
 
             > .mini
                 font-size: 23px
-                line-height: 19px
+                line-height: 22px
+
+            > .large
+                font-size: 40px
+                line-height: 30px
 
             > .big
                 z-index: 5
                 height: $pixel-proportion * 32
                 width: $pixel-proportion * 32
-                +animation(spin, 20024ms, linear, 0, infinite, normal, running)
 
                 &::before
                     height: $pixel-proportion * 40
                     width: $pixel-proportion * 40
-                    border: 1px solid #ffffff
+                    border: 1px solid $white
                     border-radius: 50%
                     content: ''
                     position: absolute
@@ -77,63 +99,101 @@
                     height: $pixel-proportion * 4
                     width: $pixel-proportion * 4
                     border-radius: 50%
-                    background-color: #ffffff
+                    background-color: $white
                     content: ''
                     position: absolute
-                    top: 0
-                    left: 0
+                    top: $pixel-proportion * -6
+                    left: $pixel-proportion * 14
+                    box-shadow: 0 0 0 2px $white
 
-            .top
+            > .big.slow
+                +animation(spin, 20024ms, linear, 0, infinite, normal, running)
+
+                &::after
+                    +animation(colors, 20024ms, linear, 0, infinite, normal, running)
+
+            > .big.fast
+                +animation(spin, 1024ms, ease-in-out, 0, infinite, normal, running)
+
+                &::after
+                    +animation(colors, 1024ms, ease-in-out, 0, infinite, normal, running)
+
+            > .top
                 top: $pixel-proportion * -3
 
-            .bottom
+            > .bottom
                 bottom: $pixel-proportion * -3
 
-            .left
+            > .left
                 left: $pixel-proportion * -4
 
-            .right
+            > .right
                 right: $pixel-proportion * -4
 
-            .margin
+            > .margin
                 margin: $pixel-proportion * 10
 
-            .disable
+            > .hidden
                 display: none !important
 
-            .color1:hover,
-            .color2:hover,
-            .color3:hover,
-            .color4:hover
-                border-width: $pixel-proportion * 2
+            > .disabled
+                opacity: .3
+
+            > .color1:hover,
+            > .color2:hover,
+            > .color3:hover,
+            > .color4:hover
                 color: $white
 
-            .color1:hover
+            > .color1:hover
                 border-color: $color1
-                box-shadow: 0 0 20px $color1
+                box-shadow: 0 0 0 15px $color1, 0 0 0 17px $white, 0 0 50px 10px $color1
                 background-color: darken($color1, 30%)
 
-            .color2:hover
+                > .fa
+                    color: darken($color1, 30%)
+
+            > .color2:hover
                 border-color: $color2
-                box-shadow: 0 0 20px $color2
+                box-shadow: 0 0 0 15px $color2, 0 0 0 17px $white, 0 0 50px 10px $color2
                 background-color: darken($color2, 20%)
 
-            .color3:hover
+                > .fa
+                    color: darken($color2, 20%)
+
+            > .color3:hover
                 border-color: $color4
-                box-shadow: 0 0 20px $color4
+                box-shadow: 0 0 0 15px $color4, 0 0 0 17px $white, 0 0 50px 10px $color4
                 background-color: darken($color4, 20%)
 
-            .color4:hover
+                > .fa
+                    color: darken($color4, 20%)
+
+            > .color4:hover
                 border-color: $color5
-                box-shadow: 0 0 20px $color5
+                box-shadow: 0 0 0 15px $color5, 0 0 0 17px $white, 0 0 50px 10px $color5
                 background-color: darken($color5, 60%)
 
+                > .fa
+                    color: darken($color5, 60%)
 
     @keyframes spin
         from
             transform: rotate(0deg)
         to
             transform: rotate(360deg)
+
+    @keyframes colors
+        0%
+            background-color: $color2
+        25%
+            background-color: $color1
+        50%
+            background-color: $color4
+        75%
+            background-color: $color5
+        100%
+            background-color: $color2
 </style>
 
 <template lang="pug">
@@ -147,50 +207,58 @@
             | drink
 
         .drinks
-            .drink.top.left.margin.color1.disable
-                | cuba
-                br
-                | libre
-            .drink.top.color2(@click="myDrink('maitai')")
-                | mai
-                br
-                | tai
-            .drink.top.right.margin.color3.disable
-                | cuba
-                br
-                | libre
-            .drink.left.color4(@click="myDrink('hifi')")
-                | hi
-                br
-                | fI
+            .drink.top.color2.large(
+                :class="{ 'disabled' : active != 'maitai' && active != '' }",
+                @click="myDrink('maitai')")
+                .internal
+                    | mai
+                    br
+                    | tai
+                    .time(v-if="active == 'maitai'") {{time}}
+                i.fa.fa-cog.fa-spin.fa-3x.fa-fw(v-if="active == 'maitai'")
+            .drink.left.color4.large(
+                :class="{ 'disabled' : active != 'hifi' && active != '' }",
+                @click="myDrink('hifi')")
+                .internal
+                    | hi
+                    br
+                    | fI
+                    .time(v-if="active == 'hifi'") {{time}}
+                i.fa.fa-cog.fa-spin.fa-3x.fa-fw(v-if="active == 'hifi'")
 
-            .big
+            .big(:class="{ 'fast' : active != '', 'slow' : active == '' }")
 
-            .drink.right.color1(@click="myDrink('cubalibre')")
-                | cuba
-                br
-                | libre
-            .drink.bottom.left.margin.color2.disable
-                | mai
-                br
-                | tai
-            .drink.bottom.color3.mini(@click="myDrink('moskvasvobodno')")
-                | moskva
-                br
-                | svobodno
-            .drink.bottom.right.margin.color4.disable
-                | mai
-                br
-                | tai
+            .drink.right.color1(
+                :class="{ 'disabled' : active != 'cubalibre' && active != '' }",
+                @click="myDrink('cubalibre')")
+                .internal
+                    | cuba
+                    br
+                    | libre
+                    .time(v-if="active == 'cubalibre'") {{time}}
+                i.fa.fa-cog.fa-spin.fa-3x.fa-fw(v-if="active == 'cubalibre'")
+            .drink.bottom.color3.mini(
+                :class="{ 'disabled' : active != 'moskvasvobodno' && active != '' }",
+                @click="myDrink('moskvasvobodno')")
+                .internal
+                    | moskva
+                    br
+                    | svobodno
+                    .time(v-if="active == 'moskvasvobodno'") {{time}}
+                i.fa.fa-cog.fa-spin.fa-3x.fa-fw(v-if="active == 'moskvasvobodno'")
 </template>
 
 <script>
     import { mapState, mapGetters, mapMutations } from 'vuex'
-    import { makeDrink } from '../axios/drinks'
+    // import { makeDrink } from '../axios/drinks'
 
     export default {
         props: [],
-        data: () => ({}),
+        data: () => ({
+            active: '',
+            time: '',
+            timer: ''
+        }),
         created: function () {},
         mounted: function () {},
         updated: function () {},
@@ -203,13 +271,49 @@
         methods: {
             ...mapMutations([]),
             myDrink (drink) {
-                if (drink) {
-                    console.log('making drink', drink)
-                    makeDrink(drink)
-                    .then(data => console.log(data))
-                } else {
+                this.active = drink
+                this.calcTime(5)
+                // if (drink && this.active === '') {
+                //     console.log('making drink', drink)
+                //     this.active = drink
+                //     makeDrink(drink)
+                //     .then(data => {
+                //         this.calcTime(data.time)
+                //     })
+                // } else {
+                //
+                // }
+            },
+            calcTime (time) {
+                this.time = ''
+                clearTimeout(this.timer)
+                this.timer = setInterval(() => {
+                    const hrs = ~~(time / 3600)
+                    const mins = ~~((time % 3600) / 60)
+                    const secs = time % 60
 
-                }
+                    let ret = ''
+
+                    if (hrs > 0) {
+                        ret += `${hrs}:`
+                    }
+
+                    ret += (mins < 10
+                        ? `0${mins}`
+                        : `${mins}`) + ':' + (secs < 10
+                            ? `0${secs}`
+                            : `${secs}`)
+
+                    --time
+
+                    this.time = ret
+
+                    if (ret === '00:00') {
+                        this.active = ''
+                        this.time = ''
+                        clearTimeout(this.timer)
+                    }
+                }, 1000)
             }
         },
         filters: {},
