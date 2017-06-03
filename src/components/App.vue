@@ -168,20 +168,23 @@
 
         .drinks
             margin-top: $pixel-proportion * -10
-            transform: scale(.8)
+            transform: scale(.7)
 
             > .top
-                top: $pixel-proportion * -3
+                right: $pixel-proportion * -4
+                top: $pixel-proportion * 2
 
             > .bottom
-                bottom: $pixel-proportion * -3
+                left: $pixel-proportion * -4
+                bottom: $pixel-proportion * 2
 
             > .left
                 left: $pixel-proportion * -4
-                top: $pixel-proportion * -3
+                top: $pixel-proportion * 2
 
             > .right
                 right: $pixel-proportion * -4
+                bottom: $pixel-proportion * 2
 
     @media only screen and (min-width: 1025px)
         .amora
